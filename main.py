@@ -19,14 +19,21 @@ def result():
     tags = request.form['tags']
     slug = request.form['slug']
     author = request.form['author']
+    abstract = request.form['abstract']
+    file_name = request.form['file_name']
     paragraphs = [request.form[f'paragraph_{i}'] for i in range(num_paragraphs)]
 
     date = datetime.now().strftime('%Y-%m-%d %H:%M')
 
-    markdown_content = f"---\nTitle: {title}\nDate: {date}\nCategory: {category}\nTags: {tags}\nSlug: {slug}\nAuthor: {author}\n---\n\n"
+    markdown_content = f"---\nTitle: {title}\nDate: {date}\nCategory: {category}\nTags: {tags}\nSlug: {slug}\nAuthor: {author}\n---\n\n{abstract}\n\n<!-- PELICAN_END_SUMMARY -->\n\n"
     
     for i, paragraph in enumerate(paragraphs):
-        markdown_content += f"# Paragraph {i+1}\n\n{paragraph}\n\n"
+        #markdown_content += f"# Paragraph {i+1}\n\n{paragraph}\n\n"
+        markdown_content += f"{paragraph}\n\n"
+
+    # Save markdown content to a file
+    with open(f"{file_name}.md", "w", encoding="utf-8") as f:
+        f.write(markdown_content)
 
     return render_template('result.html', markdown_content=markdown_content)
 
