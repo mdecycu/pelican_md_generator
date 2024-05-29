@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pelican Markdown 網誌檔案產生器</title>
+</head>
+<body>
+    <h1>Pelican Markdown 網誌檔案產生器</h1>
+    <form method="post" action="{{ url_for('result_endpoint') }}">
+        <input type="hidden" name="num_paragraphs" value="{{ num_paragraphs }}">
+        <label for="title">Title (網誌標題):</label>
+        <input type="text" id="title" name="title" size="40" required>
+        <br><br>
+        <label for="category">Category (網誌類別):</label>
+        <input type="text" id="category" name="category" size="40" required>
+        <br><br>
+        <label for="tags">Tags (網誌標籤):</label>
+        <input type="text" id="tags" name="tags" size="40" required>
+        <br><br>
+        <label for="slug">Slug (網誌文章存檔名稱):</label>
+        <input type="text" id="slug" name="slug" size="40" required>
+        <br><br>
+        <label for="author">Author (網誌作者):</label>
+        <input type="text" id="author" name="author" size="20" required>
+        <br><br>
+        {% for i in range(num_paragraphs|int) %}
+        <label for="paragraph_{{ i }}">Paragraph {{ i + 1 }}:</label>
+        <textarea id="paragraph_{{ i }}" name="paragraph_{{ i }}" rows="4" cols="50" required></textarea>
+        <br><br>
+        {% endfor %}
+        <input type="submit" value="Generate Markdown">
+    </form>
+</body>
+</html>
